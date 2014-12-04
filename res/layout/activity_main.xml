@@ -1,0 +1,76 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="85dp"
+    tools:context="com.logrit.spaceshipspotter.MainActivity"
+    tools:ignore="MergeRootFrame" >
+
+    <Button
+        android:id="@+id/FindSensorsBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="findSensorNetwork"
+        android:text="Find Sensor Network" />
+
+    <EditText
+        android:id="@+id/ConnectedDevice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No Selection"
+        android:enabled="false"
+        android:ems="10"  />
+
+    <Button
+        android:id="@+id/DownloadDataBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="DownloadSensorData"
+        android:text="Download Sensor Data" />
+
+    <Button
+        android:id="@+id/CheckPowerBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Check Power"
+        android:onClick="CheckPower" />
+
+    <EditText
+        android:id="@+id/CurrentPowerLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Power Level"
+        android:enabled="false"
+        android:ems="10"  />
+
+    <Button
+        android:id="@+id/ResetDataBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="ResetNetwork"
+        android:text="Reset Network" />
+
+    <Button
+        android:id="@+id/SyncDataBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="SynchronizeTime"
+        android:text="Shychronize Time" />
+    
+    <Button
+        android:id="@+id/GenerateRoutingTable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="GenerateRoutingTable"
+        android:text="Generate Routing Table" />
+    
+    <Button
+        android:id="@+id/FireYourLasers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="FireYourLasers"
+        android:text="Zhu Li, do the thing" />
+
+</LinearLayout>
