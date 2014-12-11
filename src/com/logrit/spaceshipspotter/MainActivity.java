@@ -94,6 +94,8 @@ public class MainActivity extends ActionBarActivity implements
 	public static final String BASE_URL = "http://spaceshipspotter.logrit.com/api";
 	boolean recording = false;
 	
+	FileOutputStream fileOutputStream = null;
+	OutputStreamWriter fileOutputWriter = null;
 	
 	char RequestState = 'N';
 	@Override
@@ -182,6 +184,17 @@ public class MainActivity extends ActionBarActivity implements
 			ShowError("Error Getting Data: " + e.getMessage());
 		}
 	}
+	@SuppressLint("NewApi")public void CloseConnection(View view) 
+	{
+		try
+		{
+			closeBT();
+		}
+		catch(Exception e)
+		{
+			ShowError("Can't Close: " + e.getMessage());
+		}
+	}
 	@SuppressLint("NewApi")public void GenerateRoutingTable(View view) 
 	{
 		try
@@ -262,20 +275,7 @@ public class MainActivity extends ActionBarActivity implements
 	        public void run()
 	        {
 
-	    		String fileName = "example2.txt";
-	    		String myDirectory = "Documents";
-	    		String externalStorage = Environment.getExternalStorageDirectory().getAbsolutePath();
-	    		File outputFile = new File(externalStorage + File.separator + myDirectory + File.separator + fileName);
-	    		FileOutputStream outputStream = null;
-	    		OutputStreamWriter outputWriter = null;
 	    		int number = 0;
-	    		try
-	    		{
-				outputStream = new FileOutputStream(outputFile);
-				outputWriter = new OutputStreamWriter(outputStream);
-	    		}
-	    		catch(Exception e)
-	    		{stopWorker =true;}
 	    		try
 	    		{
 		           while(!Thread.currentThread().isInterrupted() && !stopWorker)
@@ -307,8 +307,6 @@ public class MainActivity extends ActionBarActivity implements
 	        				}
                         }
                     }
-					outputWriter.close();
-					outputStream.close();
 	    		}
 	    		catch(Exception e)
 	    		{}
@@ -351,7 +349,17 @@ public class MainActivity extends ActionBarActivity implements
 					case ReplyData:
 						if(message.length() >= i+lengthOfDataToSend)
 						{
-							message.substring(i, i+lengthOfDataToSend);
+							try
+							{
+								if(fileOutputWriter == null)
+								{
+									CreateNewFile();
+								}
+								fileOutputWriter.append(message.substring(i, i+lengthOfDataToSend));
+							}
+							catch(Exception e){
+								ShowError("Error saving data: " + e.getMessage());
+							}
 						}
 						i+= lengthOfDataToSend;
 						break;
@@ -473,13 +481,21 @@ public class MainActivity extends ActionBarActivity implements
 	   outputStream.write('.');
 	   outputStream.write('\n');
 	}
-	public void CloseCurrentFile()
+	public void CloseCurrentFile() throws Exception
 	{
-		
+		fileOutputWriter.close();
+		fileOutputStream.close();
+		fileOutputWriter = null;
+		fileOutputStream = null;
 	}
-	public void CreateNewFile()
+	public void CreateNewFile() throws Exception
 	{
-		
+		String fileName = "example2.txt";
+		String myDirectory = "Documents";
+		String externalStorage = Environment.getExternalStorageDirectory().getAbsolutePath();
+		File outputFile = new File(externalStorage + File.separator + myDirectory + File.separator + fileName);
+		fileOutputStream = new FileOutputStream(outputFile);
+		fileOutputWriter = new OutputStreamWriter(fileOutputStream);
 	}
 	public File getAlbumStorageDir(String albumName) {
 	    // Get the directory for the user's public pictures directory. 

@@ -27,7 +27,7 @@
 
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:label="AQSN Base Station" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
