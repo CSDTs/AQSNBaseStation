@@ -31,13 +31,9 @@ import android.view.View;
 import android.bluetooth.*;
 import android.widget.*;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.location.LocationClient;
 
-public class MainActivity extends ActionBarActivity implements
-		SensorEventListener, GooglePlayServicesClient.ConnectionCallbacks,
-        GooglePlayServicesClient.OnConnectionFailedListener {
+public class MainActivity extends ActionBarActivity {
 	
 
 	private static final int lengthOfDataToSend = 100;
@@ -79,7 +75,6 @@ public class MainActivity extends ActionBarActivity implements
 	private SensorManager mSensorManager;
 	private Sensor mLight;
 	private List<Sensor> sensors;
-	private LocationClient mLocationClient;
 	private BluetoothAdapter mBluetoothAdapter;
 	private BluetoothSocket bluetoothSocket;
 	private OutputStream outputStream;
@@ -341,6 +336,15 @@ public class MainActivity extends ActionBarActivity implements
 						break;
 					case RequestPower:
 						//cannot forward through base station atm
+						power = (byte)message.charAt(i+1);
+						i++;
+						try
+						{
+							EditText CurrentPower = (EditText)findViewById(R.id.CurrentPower);
+							CurrentPower.setText(Integer.toString(power));
+						}
+						catch(Exception e){}
+						finally{}
 						break;
 					case ReplyPower:
 						power = (byte)message.charAt(i+1);
@@ -692,33 +696,5 @@ public class MainActivity extends ActionBarActivity implements
 			}
 		}
 		return false;
-	}
-
-	@Override
-	public void onConnectionFailed(ConnectionResult arg0) {
-		log(":( I have no idea");
-	}
-
-	@Override
-	public void onConnected(Bundle arg0) {
-		log("GPS Connected");
-		
-	}
-
-	@Override
-	public void onDisconnected() {
-		log("GPS Disconnected");
-	}
-
-	@Override
-	public void onSensorChanged(SensorEvent event) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onAccuracyChanged(Sensor sensor, int accuracy) {
-		// TODO Auto-generated method stub
-		
 	}
 }
